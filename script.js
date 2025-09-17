@@ -59,3 +59,34 @@ function buildPosition(position) {
 loadData().then(data => {
   data.positions.forEach(pos => root.appendChild(buildPosition(pos)));
 });
+
+// Lightbox elements
+const lb = document.getElementById('lightbox');
+const lbImg = document.getElementById('lightbox-img');
+const lbCaption = document.getElementById('lightbox-caption');
+const lbClose = document.querySelector('.lightbox-close');
+
+function openLightbox(src, caption = '') {
+  lbImg.src = src;
+  lbCaption.textContent = caption;
+  lb.classList.add('open');
+  document.body.classList.add('modal-open');
+  lb.setAttribute('aria-hidden', 'false');
+  lb.focus(); // focus dialog for ESC handling
+}
+
+function closeLightbox() {
+  lb.classList.remove('open');
+  document.body.classList.remove('modal-open');
+  lb.setAttribute('aria-hidden', 'true');
+  // Clear image to free memory (optional)
+  lbImg.removeAttribute('src');
+}
+lb.addEventListener('click', (e) => {
+  // Close if click on backdrop (not on image/figure/caption) or on the X button
+  if (e.target === lb || e.target === lbClose) closeLightbox();
+});
+lb.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeLightbox();
+});
+
