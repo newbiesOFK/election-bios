@@ -12,12 +12,11 @@
   <header class="site-header">
     <div class="container">
       <h1>OFK Board Election Bios</h1>
-      <p>Click or swipe through candidates for each position. Click an image to zoom.</p>
+      <p>Click arrows or swipe to switch candidates. Click an image to zoom.</p>
     </div>
   </header>
 
   <main id="positions-root" class="container" tabindex="-1">
-    <!-- Sections injected by script.js -->
     <noscript>
       <p class="noscript">This page needs JavaScript enabled to browse candidates.</p>
     </noscript>
@@ -41,12 +40,10 @@
   <template id="card-template">
     <li class="card" role="listitem">
       <img class="bio-image" alt="Candidate biography" loading="lazy" decoding="async" />
-      <!-- Optional name overlay (hidden by default). Toggle via CSS if you want. -->
-      <div class="name-overlay" hidden></div>
     </li>
   </template>
 
-  <!-- Lightbox (image zoom) -->
+  <!-- Lightbox -->
   <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Zoomed image" tabindex="-1">
     <button class="lightbox-close" type="button" aria-label="Close zoom">×</button>
     <figure class="lightbox-figure">
