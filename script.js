@@ -1,21 +1,34 @@
-/* OFK Board Bios – one-at-a-time slides + swipe + lightbox */
+/* OFK Board Bios – one-at-a-time slides + swipe + lightbox (buttons below) */
 const ROOT_ID = 'positions-root';
 const DATA_URL = 'data.json';
 
 const root = document.getElementById(ROOT_ID);
 
-// Lightbox elements
+// --- Lightbox elements & state ---
 const lb = document.getElementById('lightbox');
 const lbImg = document.getElementById('lightbox-img');
 const lbCaption = document.getElementById('lightbox-caption');
 const lbClose = document.querySelector('.lightbox-close');
+const lbPrev = document.querySelector('.lightbox-prev');
+const lbNext = document.querySelector('.lightbox-next');
 
-function openLightbox(src, caption = '') {
-  lbImg.src = src;
-  lbCaption.textContent = caption;
+const lbState = { items: [], index: 0 };
+
+function lbClamp(i) { return Math.max(0, Math.min(i, lbState.items.length - 1)); }
+function lbUpdate() {
+  if (!lbState.items.length) return;
+  lbImg.src = lbState.items[lbState.index].src;
+  lbCaption.textContent = lbState.items[lbState.index].caption || '';
+  lbPrev.disabled = lbState.index <= 0;
+  lbNext.disabled = lbState.index >= lbState.items.length - 1;
+}
+function openLightboxWith(items, startIndex = 0) {
+  lbState.items = items || [];
+  lbState.index = lbClamp(startIndex);
   lb.classList.add('open');
   document.body.classList.add('modal-open');
   lb.setAttribute('aria-hidden', 'false');
+  lbUpdate();
   lb.focus();
 }
 function closeLightbox() {
@@ -23,22 +36,57 @@ function closeLightbox() {
   document.body.classList.remove('modal-open');
   lb.setAttribute('aria-hidden', 'true');
   lbImg.removeAttribute('src');
+  lbState.items = [];
+  lbState.index = 0;
 }
-lb.addEventListener('click', (e) => {
-  if (e.target === lb || e.target === lbClose) closeLightbox();
-});
-lb.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
 
+// Lightbox events
+lb.addEventListener('click', (e) => { if (e.target === lb || e.target === lbClose) closeLightbox(); });
+lb.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') return closeLightbox();
+  if (e.key === 'ArrowLeft') { lbState.index = lbClamp(lbState.index - 1); lbUpdate(); }
+  if (e.key === 'ArrowRight') { lbState.index = lbClamp(lbState.index + 1); lbUpdate(); }
+});
+lbPrev.addEventListener('click', () => { lbState.index = lbClamp(lbState.index - 1); lbUpdate(); });
+lbNext.addEventListener('click', () => { lbState.index = lbClamp(lbState.index + 1); lbUpdate(); });
+
+// Lightbox swipe on the zoomed image
+let lbPointerDown = false, lbStartX = 0, lbDeltaX = 0;
+lbImg.addEventListener('pointerdown', (e) => {
+  lbPointerDown = true; lbStartX = e.clientX; lbDeltaX = 0;
+  lbImg.setPointerCapture(e.pointerId);
+});
+lbImg.addEventListener('pointermove', (e) => {
+  if (!lbPointerDown) return;
+  lbDeltaX = e.clientX - lbStartX;
+  lbImg.style.transform = `translateX(${lbDeltaX * 0.05}px)`;
+});
+function lbEndSwipe() {
+  if (!lbPointerDown) return;
+  lbPointerDown = false;
+  lbImg.style.transform = '';
+  const threshold = 40;
+  if (lbDeltaX > threshold) { lbState.index = lbClamp(lbState.index - 1); lbUpdate(); }
+  else if (lbDeltaX < -threshold) { lbState.index = lbClamp(lbState.index + 1); lbUpdate(); }
+  lbDeltaX = 0;
+}
+lbImg.addEventListener('pointerup', lbEndSwipe);
+lbImg.addEventListener('pointercancel', lbEndSwipe);
+
+// --- Data loading ---
 async function loadData() {
   const res = await fetch(`${DATA_URL}?v=${Date.now()}`, { cache: 'no-store' });
   if (!res.ok) throw new Error(`Failed to load ${DATA_URL} (${res.status})`);
-  return res.json();
+  try { return await res.json(); }
+  catch (e) { throw new Error(`Invalid JSON in ${DATA_URL}: ${e.message}`); }
 }
 
+// --- Helpers ---
 function el(q, ctx = document) { return ctx.querySelector(q); }
 function els(q, ctx = document) { return [...ctx.querySelectorAll(q)]; }
 function slugify(s) { return s.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, ''); }
 
+// --- Build one position section ---
 function buildPosition(position) {
   const posTpl = el('#position-template');
   const cardTpl = el('#card-template');
@@ -54,18 +102,23 @@ function buildPosition(position) {
   const prevBtn = el('.prev', section);
   const nextBtn = el('.next', section);
 
+  // Build candidate cards + lightbox item list for THIS position
+  const items = (position.candidates || []).map(c => ({
+    src: c.image_large || c.image,
+    caption: `${c.name} — ${position.title}`
+  }));
+
   (position.candidates || []).forEach((c, i) => {
     const card = cardTpl.content.firstElementChild.cloneNode(true);
     const img = el('.bio-image', card);
     img.src = c.image;
     img.alt = `${c.name} biography`;
 
-    // Lightbox
-    const fullSrc = c.image_large || c.image;
+    // Click/keyboard to open lightbox with this position's sequence @ index i
     img.tabIndex = 0;
-    img.addEventListener('click', () => openLightbox(fullSrc, `${c.name} — ${position.title}`));
+    img.addEventListener('click', () => openLightboxWith(items, i));
     img.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(fullSrc, `${c.name} — ${position.title}`); }
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightboxWith(items, i); }
     });
 
     track.appendChild(card);
@@ -79,95 +132,71 @@ function buildPosition(position) {
     dots.appendChild(dot);
   });
 
-  // Carousel state (one slide = viewport width)
+  // --- One-at-a-time carousel in page ---
   let index = 0;
-  let isPointerDown = false;
-  let startX = 0;
-  let currentDelta = 0;
+  let isPointerDown = false, startX = 0, currentDelta = 0;
 
-  function maxIndex() {
-    return Math.max(0, (position.candidates?.length || 1) - 1);
-  }
+  const maxIndex = () => Math.max(0, (position.candidates?.length || 1) - 1);
 
-  function setTransform(px) {
-    track.style.transform = `translate3d(${px}px,0,0)`;
-  }
-
+  function setTransform(px) { track.style.transform = `translate3d(${px}px,0,0)`; }
   function update() {
-    const slideWidth = viewport.clientWidth; // one-at-a-time
+    const slideWidth = viewport.clientWidth;
     const offset = -(index * slideWidth);
     setTransform(offset);
-
-    // Dots + buttons
     els('button', dots).forEach((d, i) => d.setAttribute('aria-selected', i === index ? 'true' : 'false'));
     prevBtn.disabled = index <= 0;
     nextBtn.disabled = index >= maxIndex();
   }
+  function go(i) { index = Math.max(0, Math.min(i, maxIndex())); update(); }
 
-  function go(i) {
-    index = Math.max(0, Math.min(i, maxIndex()));
-    update();
-  }
-
-  // Buttons
   prevBtn.addEventListener('click', () => go(index - 1));
   nextBtn.addEventListener('click', () => go(index + 1));
+  dots.addEventListener('click', (e) => { if (e.target instanceof HTMLButtonElement) go(Number(e.target.dataset.index)); });
 
-  // Dots
-  dots.addEventListener('click', (e) => {
-    if (e.target instanceof HTMLButtonElement) go(Number(e.target.dataset.index));
-  });
-
-  // Keyboard arrows
   viewport.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') { e.preventDefault(); go(index - 1); }
     if (e.key === 'ArrowRight') { e.preventDefault(); go(index + 1); }
   });
 
-  // Swipe
   viewport.addEventListener('pointerdown', (e) => {
-    isPointerDown = true;
-    startX = e.clientX;
-    currentDelta = 0;
-    viewport.setPointerCapture(e.pointerId);
+    isPointerDown = true; startX = e.clientX; currentDelta = 0; viewport.setPointerCapture(e.pointerId);
   });
   viewport.addEventListener('pointermove', (e) => {
     if (!isPointerDown) return;
     const slideWidth = viewport.clientWidth;
     currentDelta = e.clientX - startX;
     const base = -(index * slideWidth);
-    setTransform(base + currentDelta * 0.35); // small drag visual
+    setTransform(base + currentDelta * 0.35);
   });
-  viewport.addEventListener('pointerup', () => {
+  function endSwipe() {
     if (!isPointerDown) return;
     isPointerDown = false;
     const slideWidth = viewport.clientWidth;
-    const threshold = Math.max(40, slideWidth * 0.15); // 15% of width or 40px
+    const threshold = Math.max(40, slideWidth * 0.15);
     if (currentDelta > threshold) go(index - 1);
     else if (currentDelta < -threshold) go(index + 1);
     else update();
-  });
-  viewport.addEventListener('pointercancel', () => { isPointerDown = false; update(); });
+  }
+  viewport.addEventListener('pointerup', endSwipe);
+  viewport.addEventListener('pointercancel', endSwipe);
 
-  // Resize: keep current slide aligned
   window.addEventListener('resize', update, { passive: true });
-
-  // Initial
   requestAnimationFrame(update);
 
   return section;
 }
 
+// --- Render all positions ---
 function renderPositions(positions) {
   root.innerHTML = '';
   positions.forEach(pos => root.appendChild(buildPosition(pos)));
-
   if (location.hash) {
     const target = document.getElementById(location.hash.slice(1));
     if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 }
 
+// --- Boot ---
 loadData()
   .then(data => {
     document.title = data.title || 'OFK Board Election Bios';
