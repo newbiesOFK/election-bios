@@ -145,4 +145,21 @@ body{
 }
 .lightbox-caption{
   color: var(--ofk-light);
-  font-family: 'Sp
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-weight: 600; text-align: center;
+}
+.lightbox-close{
+  position: absolute; top: 16px; right: 16px;
+  width: 44px; height: 44px; border-radius: 999px;
+  border: none; background: var(--ofk-light); color: var(--ofk-white);
+  font-size: 24px; font-weight: 700; cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0,0,0,.25);
+}
+.lightbox-close:hover{ filter: brightness(.92); }
+
+body.modal-open{ overflow: hidden; }
+
+/* Mobile tweaks */
+@media (max-width: 640px){
+  .nav-btn{ width: 40px; height: 40px; }
+}
