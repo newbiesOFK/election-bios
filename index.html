@@ -4,37 +4,49 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>OFK Board Election Bios</title>
+  <meta name="description" content="Browse OFK board election bios by position" />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="favicon.ico" />
 </head>
 <body>
   <header class="site-header">
-    <h1>OFK Board Election Bios</h1>
-    <p>Swipe or click to browse candidates for each board position.</p>
+    <div class="container">
+      <h1>OFK Board Election Bios</h1>
+      <p>Click or swipe through candidates for each position. Click an image to zoom.</p>
+    </div>
   </header>
 
-  <main id="positions-root"></main>
+  <main id="positions-root" class="container" tabindex="-1">
+    <!-- Sections injected by script.js -->
+    <noscript>
+      <p class="noscript">This page needs JavaScript enabled to browse candidates.</p>
+    </noscript>
+  </main>
 
+  <!-- Templates -->
   <template id="position-template">
-    <section class="position">
+    <section class="position" aria-roledescription="carousel" aria-label="">
       <h2 class="position-title"></h2>
-      <div class="carousel">
-        <button class="nav-btn prev" type="button" aria-label="Previous">◀</button>
-        <div class="viewport">
-          <ul class="track"></ul>
+      <div class="carousel" role="group">
+        <button class="nav-btn prev" type="button" aria-label="Previous candidate" title="Previous">◀</button>
+        <div class="viewport" tabindex="0">
+          <ul class="track" role="list"></ul>
         </div>
-        <button class="nav-btn next" type="button" aria-label="Next">▶</button>
+        <button class="nav-btn next" type="button" aria-label="Next candidate" title="Next">▶</button>
       </div>
-      <div class="dots"></div>
+      <div class="dots" role="tablist" aria-label="Candidate selector"></div>
     </section>
   </template>
 
   <template id="card-template">
-    <li class="card">
-      <img class="bio-image" alt="Candidate biography" loading="lazy" />
+    <li class="card" role="listitem">
+      <img class="bio-image" alt="Candidate biography" loading="lazy" decoding="async" />
+      <!-- Optional name overlay (hidden by default). Toggle via CSS if you want. -->
+      <div class="name-overlay" hidden></div>
     </li>
   </template>
 
-   <!-- Lightbox (image zoom) -->
+  <!-- Lightbox (image zoom) -->
   <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Zoomed image" tabindex="-1">
     <button class="lightbox-close" type="button" aria-label="Close zoom">×</button>
     <figure class="lightbox-figure">
@@ -42,6 +54,12 @@
       <figcaption id="lightbox-caption" class="lightbox-caption"></figcaption>
     </figure>
   </div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Questions? Contact the OFK Board.</p>
+    </div>
+  </footer>
 
   <script src="script.js" type="module"></script>
 </body>
