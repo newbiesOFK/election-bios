@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap');
 
 :root{
-  /* Theme from you */
+  /* Theme (from you) */
   --ofk-dark: #153781;      /* dark blue background */
   --ofk-highlight: #49edc7; /* main title color (green) */
   --ofk-light: #0a9acf;     /* buttons, active dots, section titles */
@@ -33,7 +33,7 @@ body{
   margin: 0;
   font-family: 'Space Grotesk', sans-serif;
   font-size: clamp(1.6rem, 2vw + 1rem, 2.3rem);
-  color: var(--ofk-highlight); /* highlight green for main title */
+  color: var(--ofk-highlight); /* main title in highlight green */
 }
 .site-header p{ margin-top:.35rem; opacity:.9 }
 
@@ -59,9 +59,10 @@ body{
   text-align: center;
   font-family: 'Space Grotesk', sans-serif;
   font-size: 1.5rem;
-  color: var(--ofk-light); /* position title in light blue */
+  color: var(--ofk-light); /* section title in light blue */
 }
 
+/* One-at-a-time carousel */
 .carousel{
   display: grid;
   grid-template-columns: auto 1fr auto;
@@ -86,7 +87,6 @@ body{
   border-radius: 10px;
   border: 1px solid #e5e7eb;
   background: #fafafa;
-  /* Ensure the viewport defines the slide width */
   width: 100%;
 }
 
@@ -95,16 +95,13 @@ body{
   margin: 0; padding: 0;
   display: grid;
   grid-auto-flow: column;
-  /* Key change: one slide fills the viewport width */
-  grid-auto-columns: 100%;
-  gap: 0; /* no gap so it’s truly one-at-a-time */
+  grid-auto-columns: 100%; /* one slide per viewport */
+  gap: 0;
   transition: transform .35s ease;
   will-change: transform;
 }
 
-.card{
-  width: 100%;
-}
+.card{ width: 100%; }
 .bio-image{
   width: 100%; height: auto;
   border: 0;
@@ -124,7 +121,7 @@ body{
   background: var(--ofk-light); border-color: var(--ofk-light);
 }
 
-/* Lightbox */
+/* Lightbox (zoom) */
 .lightbox{
   position: fixed; inset: 0;
   background: rgba(21,55,129,0.92);
@@ -132,20 +129,47 @@ body{
   z-index: 1000;
 }
 .lightbox.open{ display: flex; }
+
 .lightbox-figure{
-  margin: 0; max-width: min(95vw, 1400px); max-height: 90vh;
-  display: grid; gap: .5rem; place-items: center;
+  margin: 0;
+  max-width: min(95vw, 1400px);
+  max-height: 90vh;
+  display: grid;
+  gap: .75rem;
+  place-items: center;
+  padding-inline: 0; /* buttons are below now */
 }
+
 #lightbox-img{
-  width: 100%; max-height: 84vh; height: auto;
+  width: 100%; max-height: 80vh; height: auto;
   border-radius: 12px; background: #fff;
   box-shadow: 0 20px 60px rgba(0,0,0,.35);
+  object-fit: contain;
 }
+
 .lightbox-caption{
   color: var(--ofk-light);
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 600; text-align: center;
 }
+
+/* Buttons BELOW the image */
+.lightbox-controls{
+  display: flex; justify-content: center; gap: 1rem;
+}
+.lightbox-nav{
+  width: 48px; height: 48px;
+  border: none; border-radius: 999px;
+  background: var(--ofk-light);
+  color: var(--ofk-white);
+  font-size: 20px; font-weight: 800;
+  cursor: pointer;
+  display: grid; place-items: center;
+  box-shadow: 0 6px 18px rgba(0,0,0,.25);
+}
+.lightbox-nav:hover { filter: brightness(0.92); }
+.lightbox-nav:disabled { opacity: .4; cursor: not-allowed; }
+
 .lightbox-close{
   position: absolute; top: 16px; right: 16px;
   width: 44px; height: 44px; border-radius: 999px;
@@ -156,3 +180,8 @@ body{
 .lightbox-close:hover{ filter: brightness(.92); }
 
 body.modal-open{ overflow: hidden; }
+
+@media (max-width: 640px){
+  .nav-btn{ width: 40px; height: 40px; }
+  .lightbox-nav { width: 40px; height: 40px; font-size: 18px; }
+}
