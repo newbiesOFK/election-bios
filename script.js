@@ -21,6 +21,23 @@ function buildPosition(position) {
     const img = card.querySelector(".bio-image");
     img.src = c.image;
     img.alt = `${c.name} biography`;
+    // Use high-res if provided; fall back to normal
+const fullSrc = c.image_large || c.image;
+
+// Click to zoom
+img.style.cursor = 'zoom-in';
+img.addEventListener('click', () => {
+  openLightbox(fullSrc, `${c.name} – ${position.title}`);
+});
+
+// Also allow Enter key activation when the image is focused
+img.tabIndex = 0;
+img.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    openLightbox(fullSrc, `${c.name} – ${position.title}`);
+  }
+});
     track.appendChild(card);
 
     const dot = document.createElement("button");
