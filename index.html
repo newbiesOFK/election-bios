@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OFK Board Election Bios</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <h1>OFK Board Election Bios</h1>
+    <p>Swipe or click to browse candidates for each board position.</p>
+  </header>
+
+  <main id="positions-root"></main>
+
+  <template id="position-template">
+    <section class="position">
+      <h2 class="position-title"></h2>
+      <div class="carousel">
+        <button class="nav-btn prev" type="button" aria-label="Previous">◀</button>
+        <div class="viewport">
+          <ul class="track"></ul>
+        </div>
+        <button class="nav-btn next" type="button" aria-label="Next">▶</button>
+      </div>
+      <div class="dots"></div>
+    </section>
+  </template>
+
+  <template id="card-template">
+    <li class="card">
+      <img class="bio-image" alt="Candidate biography" loading="lazy" />
+    </li>
+  </template>
+
+  <script src="script.js" type="module"></script>
+</body>
+</html>
