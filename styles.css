@@ -120,3 +120,62 @@ body {
   background: var(--ofk-light);
   border-color: var(--ofk-light);
 }
+
+/* --- Lightbox (zoom) --- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(6, 24, 56, 0.9); /* ofk-dark with opacity */
+  display: none; /* toggled via .open */
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.lightbox.open { display: flex; }
+
+.lightbox-figure {
+  margin: 0;
+  max-width: min(95vw, 1200px);
+  max-height: 90vh;
+  display: grid;
+  gap: .5rem;
+  place-items: center;
+}
+
+#lightbox-img {
+  width: 100%;
+  height: auto;
+  max-height: 84vh;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 20px 60px rgba(0,0,0,.35);
+}
+
+.lightbox-caption {
+  color: var(--ofk-light);
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  text-align: center;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: none;
+  background: var(--ofk-light);
+  color: var(--ofk-white);
+  font-size: 24px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0,0,0,.25);
+}
+.lightbox-close:hover { filter: brightness(0.92); }
+
+/* Prevent background scroll when lightbox is open */
+body.modal-open {
+  overflow: hidden;
+}
