@@ -4,15 +4,52 @@
       "title": "Vice President",
       "candidates": [
         { "name": "Jeff Warren", "image": "images/VP-Jeff-Warren.png" },
-        { "name": "Priya Shah", "image": "images/treasurer-priya.jpg" }
       ]
     },
     {
+      "title": "Treasurer",
+      "candidates": [
+        { "name": "Geoff Visser", "image": "images/newbie-marco.jpg" },
+        { "name": "Tomas Restrepo", "image": "images/newbie-sofia.jpg" }
+      ]
+    },
+     {
+      "title": "Social Director",
+      "candidates": [
+        { "name": "Mark Shepherd", "image": "images/newbie-marco.jpg" },
+        { "name": "Quinn Peters", "image": "images/newbie-sofia.jpg" }
+      ]
+    },
+     {
+      "title": "Webmaster",
+      "candidates": [
+        { "name": "Joel Kadziolka", "image": "images/newbie-marco.jpg" },
+        { "name": "Baraa Orabi", "image": "images/newbie-sofia.jpg" }
+      ]
+    },
+    {
+      "title": "Veteran Director",
+      "candidates": [
+        { "name": "Robin Ellsworth", "image": "images/newbie-marco.jpg" },
+        { "name": "Kyle Noftall", "image": "images/newbie-sofia.jpg" },
+        { "name": "Michael Brose Duong", "image": "images/newbie-sofia.jpg" }
+      ]
+    },
+     {
       "title": "Newbie Director",
       "candidates": [
-        { "name": "Marco Rossi", "image": "images/newbie-marco.jpg" },
-        { "name": "Sofia Lopez", "image": "images/newbie-sofia.jpg" }
+        { "name": "Brandon Carless Jones", "image": "images/newbie-marco.jpg" },
+        { "name": "Sam Cullen", "image": "images/newbie-sofia.jpg" }
       ]
-    }
+    },
+     {
+      "title": "Director at Large (2)",
+      "candidates": [
+        { "name": "Aaron Gill", "image": "images/newbie-marco.jpg" },
+        { "name": "Manuele Pichierri", "image": "images/newbie-sofia.jpg" },
+        { "name": "Andrew Fenton", "image": "images/newbie-sofia.jpg" },
+        { "name": "Matt Bergeren", "image": "images/newbie-sofia.jpg" }
+      ]
+    },
   ]
 }
