@@ -1,0 +1,18 @@
+{
+  "positions": [
+    {
+      "title": "Vice President",
+      "candidates": [
+        { "name": "Jeff Warren", "image": "images/VP-Jeff-Warren.png" },
+        { "name": "Priya Shah", "image": "images/treasurer-priya.jpg" }
+      ]
+    },
+    {
+      "title": "Newbie Director",
+      "candidates": [
+        { "name": "Marco Rossi", "image": "images/newbie-marco.jpg" },
+        { "name": "Sofia Lopez", "image": "images/newbie-sofia.jpg" }
+      ]
+    }
+  ]
+}
