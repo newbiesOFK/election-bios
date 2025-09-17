@@ -1,26 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap');
 
 :root{
-  /* Theme */
-  --ofk-dark: #153781;   /* dark blue */
-  --ofk-highlight: #49edc7;  /* highlight green */
-  --ofk-light: #0a9acf; /* light blue */
+  /* Theme from you */
+  --ofk-dark: #153781;      /* dark blue background */
+  --ofk-highlight: #49edc7; /* main title color (green) */
+  --ofk-light: #0a9acf;     /* buttons, active dots, section titles */
   --ofk-white: #ffffff;
 
-  /* Layout */
   --radius: 14px;
   --gap: 1rem;
   --shadow: 0 10px 30px rgba(0,0,0,.18);
 }
 
 * { box-sizing: border-box; }
-html, body { height: 100%; }
+html, body { height: 100%; margin: 0; }
 
 body{
-  margin: 0;
   background: var(--ofk-dark);
   color: var(--ofk-white);
-  font: 16px/1.6 'Space Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font: 16px/1.6 'Space Mono', ui-monospace, monospace;
 }
 
 .container { max-width: 1100px; margin: 0 auto; padding: 0 1rem; }
@@ -28,18 +26,19 @@ body{
 .site-header{
   padding: 2rem 0 1.25rem;
   background: var(--ofk-dark);
-  border-bottom: 1px solid rgba(255,255,255,.06);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  text-align: center;
 }
 .site-header h1{
   margin: 0;
-  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
   font-size: clamp(1.6rem, 2vw + 1rem, 2.3rem);
-  color: var(--ofk-highlight);
+  color: var(--ofk-highlight); /* highlight green for main title */
 }
-.site-header p{ margin:.35rem 0 0; opacity:.9 }
+.site-header p{ margin-top:.35rem; opacity:.9 }
 
 .site-footer{
-  border-top: 1px solid rgba(255,255,255,.06);
+  border-top: 1px solid rgba(255,255,255,.08);
   padding: 1.5rem 0 2rem; margin-top: 2.5rem; color:#cdd9f0;
 }
 
@@ -49,7 +48,7 @@ body{
 
 .position{
   background: var(--ofk-white);
-  color: #0b1224;
+  color: var(--ofk-dark);
   border-radius: var(--radius);
   padding: 1rem;
   margin: 1.25rem 0 1.75rem;
@@ -58,8 +57,9 @@ body{
 .position-title{
   margin: .25rem 0 1rem;
   text-align: center;
-  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
   font-size: 1.5rem;
+  color: var(--ofk-light); /* position title in light blue */
 }
 
 .carousel{
@@ -70,7 +70,7 @@ body{
 }
 
 .nav-btn{
-  background: var(--ofk-light);
+  background: var(--ofk-light); /* light blue buttons */
   color: var(--ofk-white);
   border: none;
   border-radius: 999px;
@@ -80,57 +80,54 @@ body{
 }
 .nav-btn:hover { filter: brightness(0.92); }
 .nav-btn:disabled{ opacity:.45; cursor: not-allowed; }
-.nav-btn:focus-visible{ outline: 3px solid #222; outline-offset: 2px; }
 
 .viewport{
   overflow: hidden;
   border-radius: 10px;
   border: 1px solid #e5e7eb;
   background: #fafafa;
+  /* Ensure the viewport defines the slide width */
+  width: 100%;
 }
+
 .track{
-  list-style: none; margin: 0; padding: var(--gap);
-  display: grid; grid-auto-flow: column; gap: var(--gap);
+  list-style: none;
+  margin: 0; padding: 0;
+  display: grid;
+  grid-auto-flow: column;
+  /* Key change: one slide fills the viewport width */
+  grid-auto-columns: 100%;
+  gap: 0; /* no gap so it’s truly one-at-a-time */
   transition: transform .35s ease;
   will-change: transform;
 }
 
-.card{ width: min(900px, 100%); position: relative; }
+.card{
+  width: 100%;
+}
 .bio-image{
   width: 100%; height: auto;
-  border-radius: 8px;
-  background: #fff;
-  border: 1px solid #e5e7eb;
+  border: 0;
+  display: block;
   cursor: zoom-in;
-  touch-action: pan-y; /* allow vertical scroll while we swipe horizontally */
 }
 
-/* Name overlay if you want it visible (remove [hidden]) */
-.name-overlay{
-  position: absolute; left: .75rem; bottom: .75rem;
-  background: rgba(6,24,56,.8);
-  color: var(--ofk-white);
-  padding: .35rem .6rem;
-  border-radius: 6px;
-  font-family: 'Space Grotesk', system-ui, sans-serif;
-  font-weight: 600; font-size: .95rem;
-}
-
+/* Dots */
 .dots{
   display: flex; justify-content: center; gap: .4rem; margin-top: .75rem;
 }
 .dots button{
   width: 10px; height: 10px; border-radius: 999px;
-  border: 1px solid #334155; background: #fff; cursor: pointer;
+  border: 1px solid var(--ofk-dark); background: #fff; cursor: pointer;
 }
 .dots button[aria-selected="true"]{
   background: var(--ofk-light); border-color: var(--ofk-light);
 }
 
-/* Lightbox (zoom) */
+/* Lightbox */
 .lightbox{
   position: fixed; inset: 0;
-  background: rgba(6,24,56,0.92);
+  background: rgba(21,55,129,0.92);
   display: none; align-items: center; justify-content: center;
   z-index: 1000;
 }
@@ -140,27 +137,22 @@ body{
   display: grid; gap: .5rem; place-items: center;
 }
 #lightbox-img{
-  width: 100%; height: auto; max-height: 84vh;
+  width: 100%; max-height: 84vh; height: auto;
   border-radius: 12px; background: #fff;
   box-shadow: 0 20px 60px rgba(0,0,0,.35);
 }
 .lightbox-caption{
   color: var(--ofk-light);
-  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
   font-weight: 600; text-align: center;
 }
 .lightbox-close{
   position: absolute; top: 16px; right: 16px;
   width: 44px; height: 44px; border-radius: 999px;
-  border: none; background: var(--ofk-light); color: var(--ofk-white);
+  border: none; background: var(--ofk-light);
+  color: var(--ofk-white);
   font-size: 24px; font-weight: 700; cursor: pointer;
-  box-shadow: 0 6px 18px rgba(0,0,0,.25);
 }
 .lightbox-close:hover{ filter: brightness(.92); }
 
 body.modal-open{ overflow: hidden; }
-
-/* Mobile tweaks */
-@media (max-width: 640px){
-  .nav-btn{ width: 40px; height: 40px; }
-}
