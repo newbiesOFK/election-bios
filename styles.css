@@ -3,7 +3,8 @@
 :root{
   /* Theme */
   --ofk-dark: #153781;   /* dark blue */
-  --ofk-light: #49edc7;  /* light blue accent */
+  --ofk-highlight: #49edc7;  /* highlight green */
+  --ofk-light: #0a9acf; /* light blue */
   --ofk-white: #ffffff;
 
   /* Layout */
@@ -33,7 +34,7 @@ body{
   margin: 0;
   font-family: 'Space Grotesk', system-ui, sans-serif;
   font-size: clamp(1.6rem, 2vw + 1rem, 2.3rem);
-  color: var(--ofk-light);
+  color: var(--ofk-highlight);
 }
 .site-header p{ margin:.35rem 0 0; opacity:.9 }
 
