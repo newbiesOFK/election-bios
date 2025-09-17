@@ -1,0 +1,88 @@
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: #f9fafb;
+}
+
+.site-header {
+  text-align: center;
+  padding: 1rem;
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.position {
+  margin: 2rem auto;
+  max-width: 900px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.position-title {
+  margin: 0 0 1rem;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.carousel {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-btn {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.viewport {
+  overflow: hidden;
+}
+
+.track {
+  list-style: none;
+  display: grid;
+  grid-auto-flow: column;
+  gap: 1rem;
+  padding: 0;
+  margin: 0;
+  transition: transform 0.3s ease;
+}
+
+.card {
+  width: min(800px, 100%);
+}
+
+.bio-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.dots button {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  background: #fff;
+}
+
+.dots button[aria-selected="true"] {
+  background: #ff6b6b;
+  border-color: #ff6b6b;
+}
