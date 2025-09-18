@@ -9,46 +9,46 @@
     {
       "title": "Treasurer",
       "candidates": [
-        { "name": "Geoff Visser", "image": "images/VP-Jeff-Warren.png" },
-        { "name": "Tomas Restrepo", "image": "images/VP-Jeff-Warren.png" }
+        { "name": "Geoff Visser", "image": "images/Geoff-Visser.png" },
+        { "name": "Tomas Restrepo", "image": "images/Tomas-Restrepo.png" }
       ]
     },
     {
       "title": "Social Director",
       "candidates": [
-        { "name": "Mark Shepherd", "image": "images/VP-Jeff-Warren.png" },
-        { "name": "Quinn Peters", "image": "images/VP-Jeff-Warren.png" }
+        { "name": "Mark Shepherd", "image": "images/Mark-Shepherd.png" },
+        { "name": "Quinn Peters", "image": "images/Quinn-Peters.png" }
       ]
     },
     {
       "title": "Webmaster",
       "candidates": [
-        { "name": "Joel Kadziolka", "image": "images/VP-Jeff-Warren.png" },
-        { "name": "Baraa Orabi", "image": "images/VP-Jeff-Warren.png" }
+        { "name": "Joel Kadziokla", "image": "images/Joel-Kadziokla.png" },
+        { "name": "Baraa Orabi", "image": "images/Baraa-Orabi.png" }
       ]
     },
     {
       "title": "Veteran Director",
       "candidates": [
-        { "name": "Robin Ellsworth", "image": "images/VP-Jeff-Warren.png" },
-        { "name": "Kyle Noftall", "image": "images/VP-Jeff-Warren.png" },
-        { "name": "Michael Brose Duong", "image": "images/VP-Jeff-Warren.png" }
+        { "name": "Robin Ellsworth", "image": "images/Robin-Ellsworth.png" },
+        { "name": "Kyle Noftall", "image": "images/Kyle-Noftall.png" },
+        { "name": "Michael Brose Duong", "image": "images/Michael-Duong.png" }
       ]
     },
     {
       "title": "Newbie Director",
       "candidates": [
-        { "name": "Brandon Carless Jones", "image": "images/VP-Jeff-Warren.png" },
-        { "name": "Sam Cullen", "image": "images/VP-Jeff-Warren.png" }
+        { "name": "Brandon Carless Jones", "image": "images/Brandon-Carless-Jones.png" },
+        { "name": "Sam Cullen", "image": "images/Sam-Cullen.png" }
       ]
     },
     {
       "title": "Director at Large (2)",
       "candidates": [
-        { "name": "Aaron Gill", "image": "images/VP-Jeff-Warren.png" },
-        { "name": "Manuele Pichierri", "image": "images/VP-Jeff-Warren.png" },
-        { "name": "Andrew Fenton", "image": "images/VP-Jeff-Warren.png" },
-        { "name": "Matt Bergeren", "image": "images/VP-Jeff-Warren.png" }
+        { "name": "Aaron Gill", "image": "images/Aaron-Gill.png" },
+        { "name": "Manuele Pichierri", "image": "images/Manuele-Pichierri.png" },
+        { "name": "Andrew Fenton", "image": "images/Andrew-Fenton.png" },
+        { "name": "Matt Berggren", "image": "images/Matt-Berggren.png" }
       ]
     }
   ]
